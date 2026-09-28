@@ -28,13 +28,15 @@ jobs:
           fi
       - name: Build and check memtailor
         run: |
-          mkdir build-dir
-          cd build-dir
+          build_dir=$(mktemp -d "$RUNNER_TEMP/memtailor-build.XXXXXXXX")
+          # distcheck can leave read-only files when a test fails.
+          trap 'chmod -R u+w "$build_dir" 2>/dev/null || true' EXIT
+          cd "$build_dir"
           if test ${{ matrix.build-system }} = autotools
-          then ../autogen.sh
-               ../configure
+          then "$GITHUB_WORKSPACE/autogen.sh"
+               "$GITHUB_WORKSPACE/configure"
                make distcheck
-          else cmake -B. -S.. -GNinja
+          else cmake -B. -S "$GITHUB_WORKSPACE" -GNinja
                ninja
                src/memtailor-unit-tests
           fi

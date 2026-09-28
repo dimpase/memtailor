@@ -2,8 +2,8 @@
 # autoconf. We use -I to tell aclocal where we put the local macros.
 ACLOCAL_AMFLAGS = -I build/autotools/m4
 
-# Search the source headers before CPPFLAGS, which may include an installed
-# version of memtailor from Homebrew.
+# Search the source headers before CPPFLAGS, which may include headers from
+# an installed version of memtailor.
 AM_CPPFLAGS = -I${top_srcdir}/src -I${top_srcdir}/
 
 # tell Libtool what the name of the library is.

@@ -14,6 +14,7 @@ jobs:
           - cmake
         os:
           - macos-latest
+          - darwin-27
           - ubuntu-latest
     steps:
       - uses: actions/checkout@v6
